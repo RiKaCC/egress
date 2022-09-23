@@ -37,7 +37,6 @@ RUN apt-get update && \
     wget \
     xvfb
 
-echo "======================================"
 # install chrome
 RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
     apt remove chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg-extra && \
