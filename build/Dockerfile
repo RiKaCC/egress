@@ -47,6 +47,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138 && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AA8E81B4331F7F50 && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7EA0A9C3F273FCD8 && \
     echo 'Package: * \
           Pin: release a=eoan \
           Pin-Priority: 500 \
