@@ -7,6 +7,7 @@ replace github.com/tinyzimmer/go-gst v0.2.32 => github.com/livekit/go-gst v0.0.0
 require (
 	cloud.google.com/go/storage v1.22.1
 	github.com/Azure/azure-storage-blob-go v0.14.0
+	github.com/aliyun/aliyun-oss-go-sdk v2.2.5+incompatible
 	github.com/aws/aws-sdk-go v1.43.3
 	github.com/chromedp/cdproto v0.0.0-20220208224320-6efb837e6bc2
 	github.com/chromedp/chromedp v0.7.7
@@ -106,6 +107,7 @@ require (
 	golang.org/x/oauth2 v0.0.0-20220411215720-9780585627b5 // indirect
 	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
 	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/time v0.0.0-20220922220347-f3bd1da661af // indirect
 	golang.org/x/xerrors v0.0.0-20220411194840-2f41105eb62f // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20220518221133-4f43b3371335 // indirect

@@ -5,10 +5,11 @@ import (
 	"path"
 	"time"
 
-	"github.com/go-logr/zapr"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/yaml.v3"
+
+	"github.com/go-logr/zapr"
 
 	"github.com/livekit/egress/pkg/errors"
 	"github.com/livekit/protocol/livekit"
@@ -42,6 +43,7 @@ type Config struct {
 	S3    *S3Config    `yaml:"s3"`
 	Azure *AzureConfig `yaml:"azure"`
 	GCP   *GCPConfig   `yaml:"gcp"`
+	Ali   *AliConfig   `yaml:"ali"`
 
 	// CPU costs for various egress types
 	CPUCost CPUCostConfig `yaml:"cpu_cost"`
@@ -50,13 +52,21 @@ type Config struct {
 
 	// internal
 	NodeID     string      `yaml:"-"`
-	FileUpload interface{} `yaml:"-"` // one of S3, Azure, or GCP
+	FileUpload interface{} `yaml:"-"` // one of S3, Azure, or GCP, or Ali Oss
 }
 
 type S3Config struct {
 	AccessKey string `yaml:"access_key"` // (env AWS_ACCESS_KEY_ID)
 	Secret    string `yaml:"secret"`     // (env AWS_SECRET_ACCESS_KEY)
 	Region    string `yaml:"region"`     // (env AWS_DEFAULT_REGION)
+	Endpoint  string `yaml:"endpoint"`
+	Bucket    string `yaml:"bucket"`
+}
+
+type AliConfig struct {
+	AccessKey string `yaml:"access_key"`
+	Secret    string `yaml:"secret"`
+	Region    string `yaml:"region"`
 	Endpoint  string `yaml:"endpoint"`
 	Bucket    string `yaml:"bucket"`
 }
@@ -121,6 +131,14 @@ func NewConfig(confString string) (*Config, error) {
 			AccountName:   conf.Azure.AccountName,
 			AccountKey:    conf.Azure.AccountKey,
 			ContainerName: conf.Azure.ContainerName,
+		}
+	} else if conf.Ali != nil {
+		conf.FileUpload = &livekit.ALIUpload{
+			AccessKey: conf.Ali.AccessKey,
+			Secret:    conf.Ali.Secret,
+			Region:    conf.Ali.Region,
+			Endpoint:  conf.Ali.Endpoint,
+			Bucket:    conf.Ali.Bucket,
 		}
 	}
 

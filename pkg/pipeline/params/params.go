@@ -420,12 +420,17 @@ func (p *Params) updateFileParams(storageFilepath string, output interface{}) er
 		p.FileUpload = o.Azure
 	case *livekit.EncodedFileOutput_Gcp:
 		p.FileUpload = o.Gcp
+	case *livekit.EncodedFileOutput_Ali:
+		p.FileUpload = o.Ali
 	case *livekit.DirectFileOutput_S3:
 		p.FileUpload = o.S3
 	case *livekit.DirectFileOutput_Azure:
 		p.FileUpload = o.Azure
 	case *livekit.DirectFileOutput_Gcp:
 		p.FileUpload = o.Gcp
+	case *livekit.DirectFileOutput_Ali:
+		p.FileUpload = o.Ali
+
 	default:
 		p.FileUpload = p.conf.FileUpload
 	}
@@ -493,6 +498,8 @@ func (p *Params) updateSegmentsParams(filePrefix string, playlistFilename string
 		p.FileUpload = o.Azure
 	case *livekit.SegmentedFileOutput_Gcp:
 		p.FileUpload = o.Gcp
+	case *livekit.SegmentedFileOutput_Ali:
+		p.FileUpload = o.Ali
 	default:
 		p.FileUpload = p.conf.FileUpload
 	}

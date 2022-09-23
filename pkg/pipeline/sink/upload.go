@@ -8,15 +8,18 @@ import (
 	"os"
 	"time"
 
+	"github.com/aliyun/aliyun-oss-go-sdk/oss"
+
 	"cloud.google.com/go/storage"
+	"google.golang.org/api/googleapi"
+	"google.golang.org/api/option"
+
 	"github.com/Azure/azure-storage-blob-go/azblob"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/googleapis/gax-go/v2"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/option"
 
 	"github.com/livekit/egress/pkg/pipeline/params"
 	"github.com/livekit/protocol/livekit"
@@ -64,6 +67,30 @@ func UploadS3(conf *livekit.S3Upload, localFilepath, storageFilepath string, mim
 	}
 
 	return fmt.Sprintf("https://%s.s3.%s.amazonaws.com/%s", conf.Bucket, conf.Region, storageFilepath), nil
+}
+
+func UploadALI(conf *livekit.ALIUpload, localFilepath, storageFilepath string, mime params.OutputType) (location string, err error) {
+	client, err := oss.New(conf.Endpoint, conf.AccessKey, conf.Secret)
+	if err != nil {
+		return "", err
+	}
+
+	bucket, err := client.Bucket(conf.Bucket)
+	if err != nil {
+		return "", err
+	}
+
+	file, err := os.Open(localFilepath)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+
+	if err = bucket.PutObject(storageFilepath, file, oss.ContentType(string(mime))); err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintf("https://%s.oss-cn-%s.aliyuncs.com/%s", conf.Bucket, conf.Region, storageFilepath), nil
 }
 
 func UploadAzure(conf *livekit.AzureBlobUpload, localFilepath, storageFilepath string, mime params.OutputType) (location string, err error) {
