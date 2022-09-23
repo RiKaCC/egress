@@ -90,6 +90,7 @@ func UploadALI(conf *livekit.ALIUpload, localFilepath, storageFilepath string, m
 		return "", err
 	}
 
+
 	return fmt.Sprintf("https://%s.oss-cn-%s.aliyuncs.com/%s", conf.Bucket, conf.Region, storageFilepath), nil
 }
 
