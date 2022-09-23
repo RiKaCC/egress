@@ -26,6 +26,7 @@ FROM livekit/gstreamer:1.20.3-prod
 ARG TARGETPLATFORM
 
 # install deps
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7EA0A9C3F273FCD8
 RUN apt-get update && \
     apt-get install -y \
     curl \
