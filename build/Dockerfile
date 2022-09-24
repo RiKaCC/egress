@@ -25,7 +25,9 @@ FROM livekit/gstreamer:1.20.3-prod
 
 ARG TARGETPLATFORM
 
-RUN sed -i "s@http://deb.debian.org@http://mirrors.aliyun.com@g" /etc/apt/sources.list && rm -Rf /var/lib/apt/lists/*
+RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+RUN sed -i s@/security.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+RUN apt clean
 
 # install deps
 RUN apt-get update && \
