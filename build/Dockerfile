@@ -25,9 +25,11 @@ FROM livekit/gstreamer:1.20.3-prod
 
 ARG TARGETPLATFORM
 
-RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
-RUN sed -i s@/security.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
-RUN apt clean
+#RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+#RUN sed -i s@/security.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+#RUN apt clean
+
+RUN sed -i 's/jammy/focal/g' /etc/apt/sources.list
 
 # install deps
 RUN apt-get update && \
@@ -41,6 +43,7 @@ RUN apt-get update && \
     wget \
     xvfb
 
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C
 # install chrome
 RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
     apt remove chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg-extra && \
