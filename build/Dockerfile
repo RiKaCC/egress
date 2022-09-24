@@ -25,9 +25,7 @@ FROM livekit/gstreamer:1.20.3-prod
 
 ARG TARGETPLATFORM
 
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 40976EAF437D05B5
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EF0F382A1A7B6500
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C
 # install deps
 RUN apt-get update && \
     apt-get install -y \
