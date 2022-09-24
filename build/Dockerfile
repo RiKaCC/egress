@@ -25,8 +25,8 @@ FROM livekit/gstreamer:1.20.3-prod
 
 ARG TARGETPLATFORM
 
-RUN apt-get install -y gnupg2
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C
+RUN RUN sed -i "s@http://deb.debian.org@http://mirrors.aliyun.com@g" /etc/apt/sources.list && rm -Rf /var/lib/apt/lists/*
+
 # install deps
 RUN apt-get update && \
     apt-get install -y \
@@ -50,6 +50,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AA8E81B4331F7F50 && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7EA0A9C3F273FCD8 && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C && \
     echo 'Package: * \
           Pin: release a=eoan \
           Pin-Priority: 500 \
